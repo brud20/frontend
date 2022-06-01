@@ -126,27 +126,41 @@ const FormModal = ({isOpen, onClose, item, title}) => {
 
     /*
     * Form submission handler, PATCH to api
-    * Show Toast success/failure
+    * Show Toast success
     */
-    const submitHandler = (e) => {
-        // TODO: put PATCH API
+    const submitHandler = async (e) => {
         const formValidity = Object.values(formValid).every((v) => v !== false);
 
         if(formValidity){
-            // TODO: Remove Set Timeout
+            const objID = e.target.dataset.form;
             setSubmission(true);
-            setTimeout(()=>{
-                assignDataSource(e.target.dataset.form, currentObject);
+            assignDataSource(objID, currentObject);
+
+            const uri = `https://jsonplaceholder.typicode.com/comments/${objID}`;
+            const response = await fetch(uri, {
+                method: "PUT",
+                body: JSON.stringify(dataItems)
+            });
+
+            if(response.ok){
                 toast({
                     title: 'Detail updated',
                     description: "We've updated the details you have provided",
                     status: 'success',
                     duration: 800,
                     isClosable: true,
-                })
+                });
                 onCloseHandler();
-            }, 3000)
-
+            } else {
+                toast({
+                    title: 'Submission Error',
+                    description: response,
+                    status: 'error',
+                    duration: 2000,
+                    isClosable: true,
+                });
+                return Promise.reject(response);
+            }
         } else {
             toast({
                 title: 'Error',
@@ -154,7 +168,7 @@ const FormModal = ({isOpen, onClose, item, title}) => {
                 status: 'error',
                 duration: 2000,
                 isClosable: true,
-            })
+            });
         }
     }
     
