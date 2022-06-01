@@ -1,4 +1,4 @@
-import { Flex, Center, useDisclosure} from '@chakra-ui/react'
+import { Flex, Center, Text, useDisclosure} from '@chakra-ui/react'
 import Image from 'next/image'
 import FormModal from './FormModal'
 
@@ -23,10 +23,10 @@ const DisplayCardItem = ({item, icon, title}) => {
             height={230}
             flexDirection='column'
             bg='white'>
-                <Center pb='4' color='dimgray' flex='1'>
+                <Text color='dimgray' flex='1' noOfLines={2} textAlign='center' maxW="xs" maxH={50}>
                     <b>{title}</b>
-                </Center>
-                <Center pb='4'>
+                </Text>
+                <Center pb='4' pt='4'>
                     <Image
                     src={icon}
                     height='95'
