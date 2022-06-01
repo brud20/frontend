@@ -118,8 +118,8 @@ const FormModal = ({isOpen, onClose, item, title}) => {
             'id': Number(id),
             'postId': newDataObj.postId,
             'name': obj.name ? obj.name : newDataObj.name,
-            'email': obj.email ? obj.email : newDataObj.email,
-            'body': obj.body ? obj.body : newDataObj.body
+            'email': obj.email,
+            'body': obj.body
         };
         setDataItems([...newData]);
     }
