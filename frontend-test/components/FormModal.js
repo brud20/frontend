@@ -15,7 +15,8 @@ import {
     useToast,
     Center,
     Spinner,
-    Text
+    Text,
+    Textarea
 } from '@chakra-ui/react'
 import React, { useState, useContext } from 'react'
 import DisplayFieldText from './DisplayFieldText'
@@ -37,10 +38,10 @@ const FormModal = ({isOpen, onClose, item, title}) => {
     const [submitButton, setSubmitButton] = useState(true);
     const [currentObject, setCurrentObject] = useState({
         id: item.id,
+        postId: item.postId,
         name: title,
-        height: item.username,
-        weight: item.email,
-        favoriteFood: item.phone
+        email: item.email,
+        body: item.body
     });
     const toast = useToast();
 
@@ -115,17 +116,12 @@ const FormModal = ({isOpen, onClose, item, title}) => {
         const newDataObj = newData[foundIndex];
         newData[foundIndex] = {
             'id': Number(id),
+            'postId': newDataObj.postId,
             'name': obj.name ? obj.name : newDataObj.name,
-            'address': newDataObj.address,
-            'company': newDataObj.company,
-            'email': newDataObj.email,
-            'phone': newDataObj.phone,
-            'username': newDataObj.username,
-            'website': newDataObj.website
-            // TODO other keys
+            'email': obj.email ? obj.email : newDataObj.email,
+            'body': obj.body ? obj.body : newDataObj.body
         };
         setDataItems([...newData]);
-        console.log("Testing: ", newData, " ", newData[foundIndex] )
     }
 
     /*
@@ -193,16 +189,12 @@ const FormModal = ({isOpen, onClose, item, title}) => {
                                 }
                             </FormControl>
                             <FormControl mt={4}>
-                                <FormLabel>Height</FormLabel>
-                                <Input data-key-name="height" placeholder='Height' defaultValue={item.username} onChange={inputChangeHandler}  />
+                                <FormLabel>Email</FormLabel>
+                                <Input data-key-name="email" placeholder='Email' defaultValue={item.email} onChange={inputChangeHandler}  />
                             </FormControl>
                             <FormControl mt={4}>
-                                <FormLabel>Weight</FormLabel>
-                                <Input data-key-name="weight" placeholder='Weight' defaultValue={item.email} onChange={inputChangeHandler}  />
-                            </FormControl>
-                            <FormControl mt={4}>
-                                <FormLabel>Favorite Food</FormLabel>
-                                <Input data-key-name="favoriteFood" placeholder='Favorite Food' defaultValue={item.phone} onChange={inputChangeHandler}  />
+                                <FormLabel>Comment</FormLabel>
+                                <Textarea data-key-name="body" placeholder='Comment' defaultValue={item.body} onChange={inputChangeHandler}  />
                             </FormControl>
                         </Box>
                     }
@@ -212,9 +204,8 @@ const FormModal = ({isOpen, onClose, item, title}) => {
                         &&
                         <Box mt='7'>
                             {title && <DisplayFieldText fieldName='Name' fieldValue={title}/>}
-                            {item.username && <DisplayFieldText fieldName='Height' fieldValue={item.username} />}
-                            {item.email && <DisplayFieldText fieldName='Weight' fieldValue={item.email} />}
-                            {item.phone && <DisplayFieldText fieldName='Favorite Food' fieldValue={item.phone} />}
+                            {item.email && <DisplayFieldText fieldName='Email' fieldValue={item.email} />}
+                            {item.body && <DisplayFieldText fieldName='Comment' fieldValue={item.body} />}
                         </Box>
                     }
                     {
